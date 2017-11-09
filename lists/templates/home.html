@@ -11,8 +11,8 @@
         </form>
 
         <table id="id_list_table">
-            {% for o in arc_reactor %}
-                <tr><td>{{ o.text }}</td></tr>
+            {% for item in items %}
+                <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
             {% endfor %}
         </table>
     </body>
