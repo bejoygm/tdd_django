@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth import BAcKEND_SESSION_KEY, SESSION_KEY, get_user_model
+from django.contrib.auth import BACKEND_SESSION_KEY, SESSION_KEY, get_user_model
 from django.contrib.sessions.backends.db import SessionStore
 from .base import FunctionalTest
 User = get_user_model()
