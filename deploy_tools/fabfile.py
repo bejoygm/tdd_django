@@ -9,8 +9,8 @@ def deploy():
     run(f'mkdir -p {site_folder}')
     with cd(site_folder):
         _get_latest_source()
-        _update_settings(env.host)
         _update_virtualenv()
+        _create_or_update_dotenv()
         _update_static_files()
         _update_database()
 
@@ -22,20 +22,6 @@ def _get_latest_source():
     current_commit = local("git log -n 1 --format=%H", capture=True)
     run(f'git reset --hard {current_commit}')
 
-def _update_settings(site_name):
-    settings_path = 'superlists/settings.py'
-    sed(settings_path, "DEBUG = True", "DEBUG = False")
-    sed(settings_path,
-        'ALLOWED_HOSTS =.+$',
-        f'ALLOWED_HOSTS = ["{site_name}"]'
-    )
-    secret_key_file = 'superlists/secret_key.py'
-    if not exists(secret_key_file):
-        chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-        key = ''.join(random.SystemRandom().choices(chars, k=50))
-        append(secret_key_file, f'SECRET_KEY = "{key}"')
-    append(settings_path, '\nfrom .secret_key import SECRET_KEY')
-
 def _update_virtualenv():
     if not exists('virtualenv/bin/pip'):
         run(f'python3.6 -m venv virtualenv')
@@ -46,3 +32,13 @@ def _update_static_files():
 
 def _update_database():
     run('./virtualenv/bin/python manage.py migrate --noinput')
+
+def _create_or_update_dotenv():
+    append('.env', 'DJANGO_DEBUG_FALSE=y')
+    append('.env', f'SITENAME={env.host}')
+    current_contents = run('cat .env')
+    if 'DJANGO_SECRET_KEY' not in current_contents:
+        new_secret = ''.join(random.SystemRandom().choices(  
+            'abcdefghijklmnopqrstuvwxyz0123456789', k=50
+        ))
+        append('.env', f'DJANGO_SECRET_KEY={new_secret}')
