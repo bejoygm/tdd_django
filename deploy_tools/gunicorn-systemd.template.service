@@ -5,6 +5,8 @@ Description=Gunicorn server for SITENAME
 Restart=on-failure
 User=ubuntu
 WorkingDirectory=/home/ubuntu/sites/SITENAME
+EnvironmentFile=/home/ubuntu/sites/SITENAME/.env
+
 ExecStart=/home/ubuntu/sites/SITENAME/virtualenv/bin/gunicorn \
     --bind unix:/tmp/SITENAME.socket \
     superlists.wsgi:application
