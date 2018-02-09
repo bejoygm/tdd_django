@@ -15,7 +15,7 @@ class UserModelTest(TestCase):
         self.assertEqual(user.pk, 'a@b.com')
 
     def test_no_problem_with_auth_login(self):
-        user = User.objects.create(email='bejoygn@gmail.com')
+        user = User.objects.create(email='bejoygm@gmail.com')
         user.backend = ''
         request = self.client.request().wsgi_request
         auth.login(request, user) # should not raise
