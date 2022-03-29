@@ -18,7 +18,7 @@ jmespath==0.9.3
 kem==3.8
 ngram==3.3.2
 numpy==1.14.0
-paramiko==2.4.0
+paramiko==2.10.1
 pyasn1==0.4.2
 pycparser==2.18
 PyNaCl==1.2.1
