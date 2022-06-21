@@ -17,7 +17,7 @@ idna==2.6
 jmespath==0.9.3
 kem==3.8
 ngram==3.3.2
-numpy==1.14.0
+numpy==1.22.0
 paramiko==2.4.0
 pyasn1==0.4.2
 pycparser==2.18
